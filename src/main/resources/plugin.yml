@@ -1,10 +1,10 @@
-name: TestPlugin
+name: BanSystem
 version: ${project.version}
-main: io.github.l1ttle_org.sampleplugin.SamplePlugin
+main: io.github.l1ttle_org.bansystem.BanSystem
 api-version: 1.13
-authors: [ l1ttle ]
+authors: [ l1ttle, ItsAlvinThePro ]
 description: Ping, pong!
-website: https://github.com/l1ttle-org/SamplePlugin
+website: https://github.com/l1ttle-org/BanSystem/
 
 commands:
   testperm:

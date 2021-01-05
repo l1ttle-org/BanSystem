@@ -1,4 +1,4 @@
-name: Build SamplePlugin
+name: Build BanSystem
 
 on:
   push:
@@ -32,5 +32,5 @@ jobs:
     - name: Copy artifacts
       uses: actions/upload-artifact@master
       with:
-        name: SamplePlugin
-        path: target/SamplePlugin*.jar
+        name: BanSystem
+        path: target/BanSystem*.jar
