@@ -2,7 +2,7 @@
 name: Bug report
 about: Report a bug
 title: ''
-labels: bug
+labels: 'bug: unconfirmed'
 assignees: ''
 
 ---
@@ -23,9 +23,9 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Information**
-OS: [eg. Linux]
-Paper/Spigot name and version: [eg. Paper 1.15.2]
-Plugin version: [eg. 1.0-SNAPSHOT]
+Paper/Spigot name and version: [eg. Paper 1.16.4]
+Plugin version: [eg. 1.0.0-SNAPSHOT]
+Logs link (upload them on https://paste.gg): 
 
 **Additional context**
 Add any other context about the problem here.
