@@ -7,18 +7,26 @@ description: Ping, pong!
 website: https://github.com/l1ttle-org/BanSystem/
 
 commands:
-  testperm:
-    description: Tests if the sender has a permission
-    permission: testplugin.testperm
-    permission-message: You do not have permission to use this command!
-    usage: /<command> <player> <permission>
+  ban:
+    description: Bans a player. Ban reason is required, use `-s` to ban silently. Duration is optional
+    permission: bansystem.ban
+    usage: /<command> <player> [-s] <reason>
+  unban:
+    description: Unbans a player. Always silent
+    permission: bansystem.unban
+    usage: /<command> <player>
 
 permissions:
-  testplugin.testperm:
-    description: Allows execution of /testperm command
-    default: op
-  testplugin.*:
-    description: Wildcard permission
+  bansystem.ban:
+    description: Allows execution of /ban command
+  bansystem.unban:
+    description: Allows execution of /unban command
+  bansystem.notify:
+    description: Allows getting notifications
+  bansystem.*:
+    description: Grants every permission registered by this plugin.
     default: op
     children:
-      testplugin.testperm: true
+      bansystem.ban: true
+      bansystem.unban: true
+      bansystem.notify: true
