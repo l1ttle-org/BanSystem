@@ -8,14 +8,17 @@ website: https://github.com/l1ttle-org/BanSystem/
 
 commands:
   ban:
-    description: Bans a player. Ban reason is required, use `-s` to ban silently. Duration is optional
+    description: Bans a player. Ban reason is required, use '-s' to ban silently. Use '_' instead of spaces in <reason>.
     permission: bansystem.ban
     usage: /<command> <player> [-s] <reason>
   unban:
-    description: Unbans a player. Always silent
+    description: Unbans a player.
     permission: bansystem.unban
-    usage: /<command> <player>
-
+    usage: /<command> <player> [-s]
+  kick:
+    description: Kicks a player. Use '_' instead of spaces in <reason>.
+    permission: bansystem.kick
+    usage: /<command> <player> [-s] <reason>
 permissions:
   bansystem.ban:
     description: Allows execution of /ban command
