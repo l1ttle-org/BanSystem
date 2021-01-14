@@ -5,7 +5,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 public class CommandKick implements CommandExecutor {
@@ -15,7 +14,7 @@ public class CommandKick implements CommandExecutor {
         if (args.length >= 2) {
             final String senderName;
             final String reason;
-            if (!(sender instanceof ConsoleCommandSender)) {
+            if (sender instanceof Player) {
                 senderName = sender.getName();
             } else {
                 senderName = "Console";

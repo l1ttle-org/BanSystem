@@ -8,24 +8,39 @@ website: https://github.com/l1ttle-org/BanSystem/
 
 commands:
   ban:
-    description: Bans a player. Ban reason is required, use '-s' to ban silently. Use '_' instead of spaces in <reason>.
+    description: Bans a player. Use '_' instead of spaces in <reason>.
     permission: bansystem.ban
     usage: /<command> <player> [-s] <reason>
   unban:
-    description: Unbans a player.
+    description: Unbans a player. Use '_' instead of spaces in <reason>.
     permission: bansystem.unban
-    usage: /<command> <player> [-s]
+    usage: /<command> <player> [-s] <reason>
+    aliases: [ pardon ]
   kick:
     description: Kicks a player. Use '_' instead of spaces in <reason>.
     permission: bansystem.kick
     usage: /<command> <player> [-s] <reason>
+  mute:
+    description: Mutes a player. Use '_' instead of spaces in <reason>.
+    permission: bansystem.mute
+    usage: /<command> <player> [-s] <reason>
+  unmute:
+    description: Unmutes a player. Use '_' instead of spaces in <reason>.
+    permission: bansystem.unmute
+    usage: /<command> <player> [-s] <reason>
 permissions:
   bansystem.ban:
-    description: Allows execution of /ban command
+    description: Allows execution of /ban command.
   bansystem.unban:
-    description: Allows execution of /unban command
+    description: Allows execution of /unban command.
+  bansystem.kick:
+    description: Allows execution of /kick command.
+  bansystem.mute:
+    description: Allows execution of /mute command.
+  bansystem.unmute:
+    description: Allows execution of /unmute command.
   bansystem.notify:
-    description: Allows getting notifications
+    description: Allows getting notifications.
   bansystem.*:
     description: Grants every permission registered by this plugin.
     default: op
@@ -33,3 +48,6 @@ permissions:
       bansystem.ban: true
       bansystem.unban: true
       bansystem.notify: true
+      bansystem.kick: true
+      bansystem.mute: true
+      bansystem.unmute: true
