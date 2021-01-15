@@ -1,6 +1,7 @@
 package io.github.l1ttle_org.bansystem.commands;
 
 import io.github.l1ttle_org.bansystem.BanSystem;
+import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -9,24 +10,30 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-public class CommandUnmute implements CommandExecutor {
+import java.util.Date;
+
+public class CommandBlacklist implements CommandExecutor {
     private final BanSystem banSystem;
 
-    public CommandUnmute(BanSystem banSystem) {
+    public CommandBlacklist(BanSystem banSystem) {
         this.banSystem = banSystem;
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length >= 2) {
+            final BanList bans = Bukkit.getBanList(BanList.Type.NAME);
             final FileConfiguration dataConfig = banSystem.getDataConfig();
+            final FileConfiguration config = banSystem.getConfig();
             final Player senderPlayer;
             final String senderName;
             final String reason;
             final Player player;
             final String playerName;
             final String playerUUID;
+            final Date date = null; /* TODO: Add durations */
             final boolean isSilent;
+            final int blacklistID = dataConfig.getInt("lastBlacklistID") + 1;
             if (!args[0].equalsIgnoreCase("-s")) {
                 player = Bukkit.getPlayer(args[0]);
                 playerName = args[0];
@@ -53,26 +60,36 @@ public class CommandUnmute implements CommandExecutor {
             }
             if (player != null) {
                 playerUUID = player.getUniqueId().toString();
-                player.sendMessage(ChatColor.GREEN + "You are now unmuted.");
             } else {
                 playerUUID = Bukkit.getOfflinePlayer(playerName).getUniqueId().toString(); // There's no other easy way to get UUID of an OfflinePlayer
             }
-            dataConfig.set(playerUUID + ".mutes.muted", false);
+            dataConfig.set(playerUUID + ".blacklists.blacklisted", true);
+            dataConfig.set(playerUUID + ".blacklists.blacklistedReason", reason);
             if (sender instanceof Player) {
                 senderPlayer = (Player) sender;
-                dataConfig.set(playerUUID + ".mutes.unMutedBy", senderPlayer.getUniqueId().toString());
+                dataConfig.set(playerUUID + ".blacklists.blacklistedBy", senderPlayer.getUniqueId().toString());
                 senderName = sender.getName();
             } else {
-                dataConfig.set(playerUUID + ".mutes.unMutedBy", "Console");
+                dataConfig.set(playerUUID + ".blacklists.blacklistedBy", "Console");
                 senderName = "Console";
             }
-            dataConfig.set(playerUUID + ".mutes.unMutedReason", reason);
-            dataConfig.set(playerUUID + ".mutes.unMutedSilently", isSilent);
+            dataConfig.set(playerUUID + ".blacklists.blacklistedOn", System.currentTimeMillis());
+            dataConfig.set(playerUUID + ".blacklists.blacklistedFor", date); /* TODO: Add durations */
+            dataConfig.set(playerUUID + ".blacklists.blacklistedSilently", isSilent);
+            dataConfig.set(playerUUID + ".blackists.blacklistID", blacklistID);
+            dataConfig.set("lastBlacklistID", blacklistID);
             banSystem.saveDataConfig();
-            if (!isSilent) {
-                Bukkit.broadcastMessage(ChatColor.RED + senderName + ChatColor.GREEN + " has unmuted " + ChatColor.RED + playerName);
+            if (player != null) {
+                bans.addBan(playerName, reason, date, senderName);
+                Bukkit.banIP(player.getAddress().toString());
+                player.kickPlayer(ChatColor.RED + "You are permanently" + ChatColor.DARK_RED + " blacklisted " + ChatColor.RED + "from this server!\n\n" + ChatColor.GRAY + "Reason: " + ChatColor.WHITE + reason + ChatColor.GRAY + "\nFind out more: " + ChatColor.BLUE + ChatColor.UNDERLINE + config.getString("websiteBlacklisted") + ChatColor.GRAY + "\n\nBlacklist ID:" + ChatColor.WHITE + " GG-" + blacklistID + ChatColor.GRAY + "\nSharing your Blacklist ID may affect the processing of your appeal!");
             } else {
-                Bukkit.broadcast(ChatColor.GRAY + "[Silent] " + ChatColor.RED + senderName + ChatColor.GREEN + " has unmuted " + ChatColor.RED + playerName + ChatColor.GREEN + " for " + ChatColor.GRAY + reason, "bansystem.notify");
+                sender.sendMessage(ChatColor.RED + "No player matching " + ChatColor.YELLOW + playerName + ChatColor.RED + " is connected to this server.");
+            }
+            if (!isSilent) {
+                Bukkit.broadcastMessage(ChatColor.RED + senderName + ChatColor.GREEN + " has permanently blacklisted " + ChatColor.RED + playerName);
+            } else {
+                Bukkit.broadcast(ChatColor.GRAY + "[Silent] " + ChatColor.RED + senderName + ChatColor.GREEN + " has permanently blacklisted " + ChatColor.RED + playerName + ChatColor.GREEN + " for " + ChatColor.GRAY + reason, "blacklistsystem.notify");
             }
             return true;
         }

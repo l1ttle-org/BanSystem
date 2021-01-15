@@ -1,0 +1,5 @@
+# Website specified on the ban screen
+# "Find out more: *your website*"
+website: https://example.com/appeal
+# Website specified on blacklist screen
+websiteBlacklisted: https://example.com/blacklistappeal

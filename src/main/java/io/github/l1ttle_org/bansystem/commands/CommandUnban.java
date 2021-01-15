@@ -67,12 +67,7 @@ public class CommandUnban implements CommandExecutor {
             }
             dataConfig.set(playerUUID + ".bans.unBannedOn", System.currentTimeMillis());
             dataConfig.set(playerUUID + ".bans.unBannedSilently", isSilent);
-            try {
-                dataConfig.save(new File(banSystem.getDataFolder(), "data.yml"));
-            } catch (IOException e) {
-                banSystem.getLogger().log(Level.SEVERE, "Could not save data to data.yml!");
-                e.printStackTrace();
-            }
+            banSystem.saveDataConfig();
             bans.pardon(playerName);
             if (!isSilent) {
                 Bukkit.broadcastMessage(ChatColor.RED + senderName + ChatColor.GREEN + " has unbanned " + ChatColor.RED + playerName);

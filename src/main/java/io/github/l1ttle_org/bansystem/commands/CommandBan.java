@@ -10,10 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Date;
-import java.util.logging.Level;
 
 public class CommandBan implements CommandExecutor {
     private final BanSystem banSystem;
@@ -27,6 +24,7 @@ public class CommandBan implements CommandExecutor {
         if (args.length >= 2) {
             final BanList bans = Bukkit.getBanList(BanList.Type.NAME);
             final FileConfiguration dataConfig = banSystem.getDataConfig();
+            final FileConfiguration config = banSystem.getConfig();
             final Player senderPlayer;
             final String senderName;
             final String reason;
@@ -35,6 +33,7 @@ public class CommandBan implements CommandExecutor {
             final String playerUUID;
             final Date date = null; /* TODO: Add durations */
             final boolean isSilent;
+            final int banID = dataConfig.getInt("lastBanID") + 1;
             if (!args[0].equalsIgnoreCase("-s")) {
                 player = Bukkit.getPlayer(args[0]);
                 playerName = args[0];
@@ -77,15 +76,12 @@ public class CommandBan implements CommandExecutor {
             dataConfig.set(playerUUID + ".bans.bannedOn", System.currentTimeMillis());
             dataConfig.set(playerUUID + ".bans.bannedFor", date); /* TODO: Add durations */
             dataConfig.set(playerUUID + ".bans.bannedSilently", isSilent);
-            try {
-                dataConfig.save(new File(banSystem.getDataFolder(), "data.yml"));
-            } catch (IOException e) {
-                banSystem.getLogger().log(Level.SEVERE, "Could not save data to data.yml!");
-                e.printStackTrace();
-            }
+            dataConfig.set(playerUUID + ".bans.banID", banID);
+            dataConfig.set("lastBanID", banID);
+            banSystem.saveDataConfig();
             bans.addBan(playerName, reason, date, senderName);
             if (player != null) {
-                player.kickPlayer(ChatColor.RED + "You are permanently banned from this server!\n\n" + "Reason: " + ChatColor.WHITE + reason);
+                player.kickPlayer(ChatColor.RED + "You are permanently" + ChatColor.DARK_RED + " banned " + ChatColor.RED + "from this server!\n\n" + ChatColor.GRAY + "Reason: " + ChatColor.WHITE + reason + ChatColor.GRAY + "\nFind out more: " + ChatColor.BLUE + ChatColor.UNDERLINE + config.getString("website") + ChatColor.GRAY + "\n\nBan ID:" + ChatColor.WHITE + " GG-" + banID + ChatColor.GRAY + "\nSharing your Ban ID may affect the processing of your appeal!");
             }
             if (!isSilent) {
                 Bukkit.broadcastMessage(ChatColor.RED + senderName + ChatColor.GREEN + " has permanently banned " + ChatColor.RED + playerName);

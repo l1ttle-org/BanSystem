@@ -76,12 +76,7 @@ public class CommandMute implements CommandExecutor {
             dataConfig.set(playerUUID + ".mutes.mutedOn", System.currentTimeMillis());
             dataConfig.set(playerUUID + ".mutes.mutedFor", date); /* TODO: Add durations */
             dataConfig.set(playerUUID + ".mutes.mutedSilently", isSilent);
-            try {
-                dataConfig.save(new File(banSystem.getDataFolder(), "data.yml"));
-            } catch (IOException e) {
-                banSystem.getLogger().log(Level.SEVERE, "Could not save data to data.yml!");
-                e.printStackTrace();
-            }
+            banSystem.saveDataConfig();
             if (!isSilent) {
                 Bukkit.broadcastMessage(ChatColor.RED + senderName + ChatColor.GREEN + " has permanently muted " + ChatColor.RED + playerName);
             } else {
