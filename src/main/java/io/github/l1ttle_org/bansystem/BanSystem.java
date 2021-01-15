@@ -32,6 +32,7 @@ public final class BanSystem extends JavaPlugin implements Listener {
         if (dataConfig.get("lastBlacklistID") == null) {
             dataConfig = getDataConfig();
             dataConfig.set("lastBlacklistID", 1);
+            saveDataConfig();
         }
         getCommand("ban").setExecutor(new CommandBan(this));
         getCommand("unban").setExecutor(new CommandUnban(this));
