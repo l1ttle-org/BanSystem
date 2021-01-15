@@ -11,11 +11,11 @@ commands:
     description: Bans a player. Use '_' instead of spaces in <reason>.
     permission: bansystem.ban
     usage: /<command> <player> [-s] <reason>
-  unban:
-    description: Unbans a player. Use '_' instead of spaces in <reason>.
-    permission: bansystem.unban
+  blacklist:
+    description: Blacklists a player. Use '_' instead of spaces in <reason>.
+    permission: bansystem.blacklist
     usage: /<command> <player> [-s] <reason>
-    aliases: [ pardon ]
+    aliases: [ banip, ban-ip, ipban ]
   kick:
     description: Kicks a player. Use '_' instead of spaces in <reason>.
     permission: bansystem.kick
@@ -24,13 +24,19 @@ commands:
     description: Mutes a player. Use '_' instead of spaces in <reason>.
     permission: bansystem.mute
     usage: /<command> <player> [-s] <reason>
+  unban:
+    description: Unbans a player. Use '_' instead of spaces in <reason>.
+    permission: bansystem.unban
+    usage: /<command> <player> [-s] <reason>
+    aliases: [ pardon ]
+  unblacklist:
+    description: Unblacklists a player. Use '_' instead of spaces in <reason>.
+    permission: bansystem.unblacklist
+    usage: /<command> <player> [-s] <reason>
+    aliases: [ unbanip, unban-ip, pardon-ip ]
   unmute:
     description: Unmutes a player. Use '_' instead of spaces in <reason>.
     permission: bansystem.unmute
-    usage: /<command> <player> [-s] <reason>
-  blacklist:
-    description: Blacklists a player. Use '_' instead of spaces in <reason>.
-    permission: bansystem.blacklist
     usage: /<command> <player> [-s] <reason>
 permissions:
   bansystem.ban:
