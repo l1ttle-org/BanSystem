@@ -26,16 +26,16 @@ public final class BanSystem extends JavaPlugin implements Listener {
             PaperLib.suggestPaper(this);
         }
         saveDefaultConfig();
-        FileConfiguration dataConfig = getDataConfig();
-        if (dataConfig.get("lastBanID") == null) {
-            dataConfig.set("lastBanID", 1);
-            saveDataConfig();
-        }
-        if (dataConfig.get("lastBlacklistID") == null) {
-            dataConfig = getDataConfig();
-            dataConfig.set("lastBlacklistID", 1);
-            saveDataConfig();
-        }
+        //FileConfiguration dataConfig = getDataConfig();
+        //if (dataConfig.get("lastBanID") == null) {
+        //    dataConfig.set("lastBanID", 1);
+        //    saveDataConfig();
+        //}
+        //if (dataConfig.get("lastBlacklistID") == null) {
+        //    dataConfig = getDataConfig();
+        //    dataConfig.set("lastBlacklistID", 1);
+        //    saveDataConfig();
+        //}
         getCommand("ban").setExecutor(new CommandBan(this));
         getCommand("blacklist").setExecutor(new CommandBlacklist(this));
         getCommand("kick").setExecutor(new CommandKick());
