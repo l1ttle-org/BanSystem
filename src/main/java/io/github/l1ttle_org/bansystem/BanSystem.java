@@ -1,5 +1,6 @@
 package io.github.l1ttle_org.bansystem;
 
+import io.github.l1ttle_org.bansystem.commands.CommandBan;
 import io.github.l1ttle_org.bansystem.commands.CommandBlacklist;
 import io.github.l1ttle_org.bansystem.commands.CommandKick;
 import io.github.l1ttle_org.bansystem.commands.CommandMute;
@@ -32,7 +33,7 @@ public final class BanSystem extends JavaPlugin implements Listener {
             dataConfig = getDataConfig();
             dataConfig.set("lastBlacklistID", 1);
         }
-        getCommand("ban").setExecutor(new CommandBlacklist(this));
+        getCommand("ban").setExecutor(new CommandBan(this));
         getCommand("unban").setExecutor(new CommandUnban(this));
         getCommand("kick").setExecutor(new CommandKick());
         getCommand("mute").setExecutor(new CommandMute(this));
