@@ -81,7 +81,7 @@ public class CommandBan implements CommandExecutor {
             banSystem.saveDataConfig();
             bans.addBan(playerName, reason, date, senderName);
             if (player != null) {
-                player.kickPlayer(ChatColor.RED + "You are permanently" + ChatColor.DARK_RED + " banned " + ChatColor.RED + "from this server!\n\n" + ChatColor.GRAY + "Reason: " + ChatColor.WHITE + reason + ChatColor.GRAY + "\nFind out more: " + ChatColor.BLUE + ChatColor.UNDERLINE + config.getString("website") + ChatColor.GRAY + "\n\nBan ID:" + ChatColor.WHITE + " GG-" + banID + ChatColor.GRAY + "\nSharing your Ban ID may affect the processing of your appeal!");
+                player.kickPlayer(ChatColor.RED + "You are permanently" + ChatColor.DARK_RED + " banned " + ChatColor.RED + "from this server!\n\n" + ChatColor.GRAY + "Reason: " + ChatColor.WHITE + reason + ChatColor.GRAY + "\nFind out more: " + ChatColor.AQUA + ChatColor.UNDERLINE + config.getString("website") + ChatColor.GRAY + "\n\nBan ID:" + ChatColor.WHITE + " GG-" + banID + ChatColor.GRAY + "\nSharing your Ban ID may affect the processing of your appeal!");
             }
             if (!isSilent) {
                 Bukkit.broadcastMessage(ChatColor.RED + senderName + ChatColor.GREEN + " has permanently banned " + ChatColor.RED + playerName);
