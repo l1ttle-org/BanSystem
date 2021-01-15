@@ -35,16 +35,18 @@ commands:
 permissions:
   bansystem.ban:
     description: Allows execution of /ban command.
-  bansystem.unban:
-    description: Allows execution of /unban command.
+  bansystem.blacklist:
+    description: Allows execution of /blacklist command.
   bansystem.kick:
     description: Allows execution of /kick command.
   bansystem.mute:
     description: Allows execution of /mute command.
+  bansystem.unban:
+    description: Allows execution of /unban command.
+  bansystem.unblacklist:
+    description: Allows execution of /unblacklist command.
   bansystem.unmute:
     description: Allows execution of /unmute command.
-  bansystem.blacklist:
-    description: Allows execution of /blacklist command.
   bansystem.notify:
     description: Allows getting notifications.
   bansystem.*:
@@ -52,9 +54,10 @@ permissions:
     default: op
     children:
       bansystem.ban: true
-      bansystem.unban: true
-      bansystem.notify: true
+      bansystem.blacklist: true
       bansystem.kick: true
       bansystem.mute: true
+      bansystem.unban: true
+      bansystem.unblacklist: true
       bansystem.unmute: true
-      bansystem.blacklist: true
+      bansystem.notify: true

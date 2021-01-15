@@ -5,6 +5,7 @@ import io.github.l1ttle_org.bansystem.commands.CommandBlacklist;
 import io.github.l1ttle_org.bansystem.commands.CommandKick;
 import io.github.l1ttle_org.bansystem.commands.CommandMute;
 import io.github.l1ttle_org.bansystem.commands.CommandUnban;
+import io.github.l1ttle_org.bansystem.commands.CommandUnblacklist;
 import io.github.l1ttle_org.bansystem.commands.CommandUnmute;
 import io.papermc.lib.PaperLib;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -24,6 +25,7 @@ public final class BanSystem extends JavaPlugin implements Listener {
         if (PaperLib.isSpigot()) {
             PaperLib.suggestPaper(this);
         }
+        saveDefaultConfig();
         FileConfiguration dataConfig = getDataConfig();
         if (dataConfig.get("lastBanID") == null) {
             dataConfig.set("lastBanID", 1);
@@ -35,11 +37,12 @@ public final class BanSystem extends JavaPlugin implements Listener {
             saveDataConfig();
         }
         getCommand("ban").setExecutor(new CommandBan(this));
-        getCommand("unban").setExecutor(new CommandUnban(this));
+        getCommand("blacklist").setExecutor(new CommandBlacklist(this));
         getCommand("kick").setExecutor(new CommandKick());
         getCommand("mute").setExecutor(new CommandMute(this));
+        getCommand("unban").setExecutor(new CommandUnban(this));
+        getCommand("unblacklist").setExecutor(new CommandUnblacklist(this));
         getCommand("unmute").setExecutor(new CommandUnmute(this));
-        getCommand("blacklist").setExecutor(new CommandBlacklist(this));
         getServer().getPluginManager().registerEvents(new BanSystemListener(this), this);
     }
 

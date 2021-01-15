@@ -64,28 +64,30 @@ public class CommandBlacklist implements CommandExecutor {
             } else {
                 playerUUID = Bukkit.getOfflinePlayer(playerName).getUniqueId().toString(); // There's no other easy way to get UUID of an OfflinePlayer
             }
-            dataConfig.set(playerUUID + ".blacklists.blacklisted", true);
-            dataConfig.set(playerUUID + ".blacklists.blacklistedReason", reason);
-            if (sender instanceof Player) {
-                senderPlayer = (Player) sender;
-                dataConfig.set(playerUUID + ".blacklists.blacklistedBy", senderPlayer.getUniqueId().toString());
-                senderName = sender.getName();
-            } else {
-                dataConfig.set(playerUUID + ".blacklists.blacklistedBy", "Console");
-                senderName = "Console";
-            }
-            dataConfig.set(playerUUID + ".blacklists.blacklistedOn", System.currentTimeMillis());
-            dataConfig.set(playerUUID + ".blacklists.blacklistedFor", date); /* TODO: Add durations */
-            dataConfig.set(playerUUID + ".blacklists.blacklistedSilently", isSilent);
-            dataConfig.set(playerUUID + ".blacklists.blacklistID", blacklistID);
-            dataConfig.set("lastBlacklistID", blacklistID);
-            banSystem.saveDataConfig();
             if (player != null) {
+                dataConfig.set(playerUUID + ".blacklists.blacklisted", true);
+                dataConfig.set(playerUUID + ".blacklists.blacklistedReason", reason);
+                if (sender instanceof Player) {
+                    senderPlayer = (Player) sender;
+                    dataConfig.set(playerUUID + ".blacklists.blacklistedBy", senderPlayer.getUniqueId().toString());
+                    senderName = sender.getName();
+                } else {
+                    dataConfig.set(playerUUID + ".blacklists.blacklistedBy", "Console");
+                    senderName = "Console";
+                }
+                dataConfig.set(playerUUID + ".blacklists.blacklistedOn", System.currentTimeMillis());
+                dataConfig.set(playerUUID + ".blacklists.blacklistedFor", date); /* TODO: Add durations */
+                dataConfig.set(playerUUID + ".blacklists.blacklistedSilently", isSilent);
+                dataConfig.set(playerUUID + ".blacklists.blacklistID", blacklistID);
+                dataConfig.set(playerUUID + ".blacklists.IP", player.getAddress());
+                dataConfig.set("lastBlacklistID", blacklistID);
+                banSystem.saveDataConfig();
                 bans.addBan(playerName, reason, date, senderName);
                 bansIP.addBan(player.getAddress().toString(), reason, date, senderName);
                 player.kickPlayer(ChatColor.RED + "You are permanently" + ChatColor.DARK_RED + " blacklisted " + ChatColor.RED + "from this server!\n\n" + ChatColor.GRAY + "Reason: " + ChatColor.WHITE + reason + ChatColor.GRAY + "\nFind out more: " + ChatColor.AQUA + ChatColor.UNDERLINE + config.getString("websiteBlacklisted") + ChatColor.GRAY + "\n\nBlacklist ID:" + ChatColor.WHITE + " GG-" + blacklistID + ChatColor.GRAY + "\nSharing your Blacklist ID may affect the processing of your appeal!");
             } else {
                 sender.sendMessage(ChatColor.RED + "No player matching " + ChatColor.YELLOW + playerName + ChatColor.RED + " is connected to this server.");
+                return true;
             }
             if (!isSilent) {
                 Bukkit.broadcastMessage(ChatColor.RED + senderName + ChatColor.GREEN + " has permanently blacklisted " + ChatColor.RED + playerName);
