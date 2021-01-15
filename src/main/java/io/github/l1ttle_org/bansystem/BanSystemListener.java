@@ -1,5 +1,7 @@
 package io.github.l1ttle_org.bansystem;
 
+import org.bukkit.BanList;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -18,6 +20,7 @@ public class BanSystemListener implements Listener {
 
     @EventHandler
     public void onPlayerLogin(PlayerLoginEvent event) {
+        final BanList bansIP = Bukkit.getBanList(BanList.Type.IP);
         final Player player = event.getPlayer();
         final FileConfiguration config = banSystem.getConfig();
         final FileConfiguration dataConfig = banSystem.getDataConfig();
@@ -27,7 +30,7 @@ public class BanSystemListener implements Listener {
             final int banID = dataConfig.getInt("lastBanID") + 1;
             event.setKickMessage(ChatColor.RED + "You are permanently" + ChatColor.DARK_RED + " banned " + ChatColor.RED + "from this server!\n\n" + ChatColor.GRAY + "Reason: " + ChatColor.WHITE + reason + ChatColor.GRAY + "\nFind out more: " + ChatColor.BLUE + ChatColor.UNDERLINE + config.getString("website") + ChatColor.GRAY + "\n\nBan ID:" + ChatColor.WHITE + " GG-" + banID + ChatColor.GRAY + "\nSharing your Ban ID may affect the processing of your appeal!");
         }
-        if (dataConfig.getBoolean(playerUUID + ".blacklists.blacklisted")) {
+        if (dataConfig.getBoolean(playerUUID + ".blacklists.blacklisted") || bansIP.getBanEntry(event.getAddress().getHostAddress()) != null) {
             final String reason = dataConfig.getString(playerUUID + ".blacklists.blacklistedReason");
             final int blacklistID = dataConfig.getInt("lastBlacklistID") + 1;
             player.kickPlayer(ChatColor.RED + "You are permanently" + ChatColor.DARK_RED + " blacklisted " + ChatColor.RED + "from this server!\n\n" + ChatColor.GRAY + "Reason: " + ChatColor.WHITE + reason + ChatColor.GRAY + "\nFind out more: " + ChatColor.BLUE + ChatColor.UNDERLINE + config.getString("websiteBlacklisted") + ChatColor.GRAY + "\n\nBlacklist ID:" + ChatColor.WHITE + " GG-" + blacklistID + ChatColor.GRAY + "\nSharing your Blacklist ID may affect the processing of your appeal!");

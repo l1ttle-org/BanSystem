@@ -23,6 +23,7 @@ public class CommandBlacklist implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length >= 2) {
             final BanList bans = Bukkit.getBanList(BanList.Type.NAME);
+            final BanList bansIP = Bukkit.getBanList(BanList.Type.IP);
             final FileConfiguration dataConfig = banSystem.getDataConfig();
             final FileConfiguration config = banSystem.getConfig();
             final Player senderPlayer;
@@ -81,7 +82,7 @@ public class CommandBlacklist implements CommandExecutor {
             banSystem.saveDataConfig();
             if (player != null) {
                 bans.addBan(playerName, reason, date, senderName);
-                Bukkit.banIP(player.getAddress().toString());
+                bansIP.addBan(player.getAddress().toString(), reason, date, senderName);
                 player.kickPlayer(ChatColor.RED + "You are permanently" + ChatColor.DARK_RED + " blacklisted " + ChatColor.RED + "from this server!\n\n" + ChatColor.GRAY + "Reason: " + ChatColor.WHITE + reason + ChatColor.GRAY + "\nFind out more: " + ChatColor.AQUA + ChatColor.UNDERLINE + config.getString("websiteBlacklisted") + ChatColor.GRAY + "\n\nBlacklist ID:" + ChatColor.WHITE + " GG-" + blacklistID + ChatColor.GRAY + "\nSharing your Blacklist ID may affect the processing of your appeal!");
             } else {
                 sender.sendMessage(ChatColor.RED + "No player matching " + ChatColor.YELLOW + playerName + ChatColor.RED + " is connected to this server.");
