@@ -49,6 +49,7 @@ public final class BanSystem extends JavaPlugin implements Listener {
     public FileConfiguration getDataConfig() {
         return YamlConfiguration.loadConfiguration(new File(getDataFolder(), "data.yml"));
     }
+
     public void saveDataConfig() {
         final FileConfiguration dataConfig = getDataConfig();
         try {

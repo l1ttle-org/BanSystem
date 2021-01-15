@@ -9,10 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Date;
-import java.util.logging.Level;
 
 public class CommandMute implements CommandExecutor {
     private final BanSystem banSystem;
