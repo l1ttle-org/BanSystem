@@ -28,6 +28,10 @@ commands:
     description: Unmutes a player. Use '_' instead of spaces in <reason>.
     permission: bansystem.unmute
     usage: /<command> <player> [-s] <reason>
+  blacklist:
+    description: Blacklists a player. Use '_' instead of spaces in <reason>.
+    permission: bansystem.blacklist
+    usage: /<command> <player> [-s] <reason>
 permissions:
   bansystem.ban:
     description: Allows execution of /ban command.
@@ -39,6 +43,8 @@ permissions:
     description: Allows execution of /mute command.
   bansystem.unmute:
     description: Allows execution of /unmute command.
+  bansystem.blacklist:
+    description: Allows execution of /blacklist command.
   bansystem.notify:
     description: Allows getting notifications.
   bansystem.*:
@@ -51,3 +57,4 @@ permissions:
       bansystem.kick: true
       bansystem.mute: true
       bansystem.unmute: true
+      bansystem.blacklist: true
