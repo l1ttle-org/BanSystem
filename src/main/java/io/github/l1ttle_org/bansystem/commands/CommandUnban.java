@@ -51,6 +51,12 @@ public class CommandUnban implements CommandExecutor {
                 }
             }
             playerUUID = Bukkit.getOfflinePlayer(playerName).getUniqueId().toString(); // There's no other easy way to get UUID of an OfflinePlayer
+            try {
+                bans.pardon(playerName);
+            } catch (NullPointerException e) {
+                sender.sendMessage(ChatColor.RED + "No player matching " + ChatColor.YELLOW + playerName + ChatColor.RED + " was banned from this server");
+                return true;
+            }
             dataConfig.set(playerUUID + ".bans.banned", false);
             dataConfig.set(playerUUID + ".bans.unBannedReason", reason);
             if (sender instanceof Player) {
@@ -64,7 +70,6 @@ public class CommandUnban implements CommandExecutor {
             dataConfig.set(playerUUID + ".bans.unBannedOn", System.currentTimeMillis());
             dataConfig.set(playerUUID + ".bans.unBannedSilently", isSilent);
             banSystem.saveDataConfig(dataConfig);
-            bans.pardon(playerName);
             if (!isSilent) {
                 Bukkit.broadcastMessage(ChatColor.RED + senderName + ChatColor.GREEN + " has unbanned " + ChatColor.RED + playerName);
             } else {

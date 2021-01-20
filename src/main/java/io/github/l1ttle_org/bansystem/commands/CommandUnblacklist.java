@@ -52,6 +52,13 @@ public class CommandUnblacklist implements CommandExecutor {
                 }
             }
             playerUUID = Bukkit.getOfflinePlayer(playerName).getUniqueId().toString(); // There's no other easy way to get UUID of an OfflinePlayer
+            try {
+                bans.pardon(playerName);
+                bansIP.pardon(playerUUID + ".blacklists.IP");
+            } catch (NullPointerException e) {
+                sender.sendMessage(ChatColor.RED + "No player matching " + ChatColor.YELLOW + playerName + ChatColor.RED + " was banned or blacklisted from this server");
+                return true;
+            }
             dataConfig.set(playerUUID + ".blacklists.blacklisted", false);
             dataConfig.set(playerUUID + ".blacklists.unBlacklistedReason", reason);
             if (sender instanceof Player) {
@@ -65,8 +72,6 @@ public class CommandUnblacklist implements CommandExecutor {
             dataConfig.set(playerUUID + ".blacklists.unBlacklistedOn", System.currentTimeMillis());
             dataConfig.set(playerUUID + ".blacklists.UnBlacklistedSilently", isSilent);
             banSystem.saveDataConfig(dataConfig);
-            bans.pardon(playerName);
-            bansIP.pardon(playerUUID + ".blacklists.IP");
             if (!isSilent) {
                 Bukkit.broadcastMessage(ChatColor.RED + senderName + ChatColor.GREEN + " has unblacklisted " + ChatColor.RED + playerName);
             } else {
