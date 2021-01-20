@@ -64,7 +64,9 @@ public class CommandBan implements CommandExecutor {
                 playerUUID = Bukkit.getOfflinePlayer(playerName).getUniqueId().toString(); // There's no other easy way to get UUID of an OfflinePlayer
             }
             dataConfig.set(playerUUID + ".bans.banned", true);
+            System.out.println(".bans.banned was set to true");
             dataConfig.set(playerUUID + ".bans.bannedReason", reason);
+            System.out.println(".bans.bannedReason was set to " + reason);
             if (sender instanceof Player) {
                 senderPlayer = (Player) sender;
                 dataConfig.set(playerUUID + ".bans.bannedBy", senderPlayer.getUniqueId().toString());
@@ -74,12 +76,19 @@ public class CommandBan implements CommandExecutor {
                 senderName = "Console";
             }
             dataConfig.set(playerUUID + ".bans.bannedOn", System.currentTimeMillis());
-            dataConfig.set(playerUUID + ".bans.bannedFor", date); /* TODO: Add durations */
+            System.out.println(".bans.bannedOn was set to " + System.currentTimeMillis());
+            dataConfig.set(playerUUID + ".bans.bannedFor", date); /* TODOq: Add durations */
+            System.out.println(".bans.bannedFor was set to " + date);
             dataConfig.set(playerUUID + ".bans.bannedSilently", isSilent);
+            System.out.println(".bans.bannedSilently was set to " + isSilent);
             dataConfig.set(playerUUID + ".bans.banID", banID);
+            System.out.println(".bans.banID was set to " + banID);
             dataConfig.set("lastBanID", banID);
+            System.out.println("lastBanID was set to " + banID);
             banSystem.saveDataConfig();
+            System.out.println("Config saved");
             bans.addBan(playerName, reason, date, senderName);
+            System.out.println("Ban entry added");
             if (player != null) {
                 player.kickPlayer(ChatColor.RED + "You are permanently" + ChatColor.DARK_RED + " banned " + ChatColor.RED + "from this server!\n\n" + ChatColor.GRAY + "Reason: " + ChatColor.WHITE + reason + ChatColor.GRAY + "\nFind out more: " + ChatColor.AQUA + ChatColor.UNDERLINE + config.getString("website") + ChatColor.GRAY + "\n\nBan ID:" + ChatColor.WHITE + " GG-" + banID + ChatColor.GRAY + "\nSharing your Ban ID may affect the processing of your appeal!");
             }
