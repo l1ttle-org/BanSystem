@@ -10,14 +10,13 @@ import io.github.l1ttle_org.bansystem.commands.CommandUnmute;
 import io.papermc.lib.PaperLib;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 
-public final class BanSystem extends JavaPlugin implements Listener {
+public final class BanSystem extends JavaPlugin {
 
     @Override
     public void onEnable() {
@@ -26,16 +25,16 @@ public final class BanSystem extends JavaPlugin implements Listener {
             PaperLib.suggestPaper(this);
         }
         saveDefaultConfig();
-        //FileConfiguration dataConfig = getDataConfig();
-        //if (dataConfig.get("lastBanID") == null) {
-        //    dataConfig.set("lastBanID", 1);
-        //    saveDataConfig();
-        //}
-        //if (dataConfig.get("lastBlacklistID") == null) {
-        //    dataConfig = getDataConfig();
-        //    dataConfig.set("lastBlacklistID", 1);
-        //    saveDataConfig();
-        //}
+        FileConfiguration dataConfig = getDataConfig();
+        if (dataConfig.get("lastBanID") == null) {
+            dataConfig.set("lastBanID", 1);
+            saveDataConfig(dataConfig);
+        }
+        if (dataConfig.get("lastBlacklistID") == null) {
+            dataConfig = getDataConfig();
+            dataConfig.set("lastBlacklistID", 1);
+            saveDataConfig(dataConfig);
+        }
         getCommand("ban").setExecutor(new CommandBan(this));
         getCommand("blacklist").setExecutor(new CommandBlacklist(this));
         getCommand("kick").setExecutor(new CommandKick());
