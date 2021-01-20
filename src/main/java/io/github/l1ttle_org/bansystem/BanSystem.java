@@ -27,12 +27,12 @@ public final class BanSystem extends JavaPlugin {
         saveDefaultConfig();
         FileConfiguration dataConfig = getDataConfig();
         if (dataConfig.get("lastBanID") == null) {
-            dataConfig.set("lastBanID", 1);
+            dataConfig.set("lastBanID", 0);
             saveDataConfig(dataConfig);
         }
         if (dataConfig.get("lastBlacklistID") == null) {
             dataConfig = getDataConfig();
-            dataConfig.set("lastBlacklistID", 1);
+            dataConfig.set("lastBlacklistID", 0);
             saveDataConfig(dataConfig);
         }
         getCommand("ban").setExecutor(new CommandBan(this));

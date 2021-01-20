@@ -32,11 +32,11 @@ public class BanSystemListener implements Listener {
             final int banID = dataConfig.getInt(playerUUID + ".bans.banID");
             event.setKickMessage(ChatColor.RED + "You are permanently" + ChatColor.DARK_RED + " banned " + ChatColor.RED + "from this server!\n\n" + ChatColor.GRAY + "Reason: " + ChatColor.WHITE + reason + ChatColor.GRAY + "\nFind out more: " + ChatColor.AQUA + ChatColor.UNDERLINE + config.getString("website") + ChatColor.GRAY + "\n\nBan ID:" + ChatColor.WHITE + " GG-" + banID + ChatColor.GRAY + "\nSharing your Ban ID may affect the processing of your appeal!");
         }
-        if (dataConfig.getBoolean(playerUUID + ".blacklists.blacklisted") || bansIP.getBanEntry(event.getAddress().getHostAddress()) != null) {
+        if (dataConfig.getBoolean(playerUUID + ".blacklists.blacklisted") || bansIP.getBanEntry(player.getAddress().getHostString()) != null) {
             final String reason = dataConfig.getString(playerUUID + ".blacklists.blacklistedReason");
             int blacklistID = 0;
             try {
-                blacklistID = dataConfig.getInt(player.getAddress().getHostString() + ".blacklists.blacklistID");
+                blacklistID = dataConfig.getInt(event.getHostname() + ".blacklists.blacklistID");
             } catch (NullPointerException e) {
                 banSystem.getLogger().log(Level.SEVERE, "An error occurred! Please report it to l1ttle-org. Diagnostic info:");
                 banSystem.getLogger().log(Level.SEVERE, "Exception: NullPointerException. File: BanSystemListener. Line 39:");
