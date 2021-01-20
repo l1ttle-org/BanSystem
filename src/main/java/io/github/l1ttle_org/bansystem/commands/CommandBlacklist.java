@@ -81,7 +81,7 @@ public class CommandBlacklist implements CommandExecutor {
                 dataConfig.set(playerUUID + ".blacklists.blacklistID", blacklistID);
                 dataConfig.set(playerUUID + ".blacklists.IP", player.getAddress());
                 dataConfig.set("lastBlacklistID", blacklistID);
-                banSystem.saveDataConfig();
+                banSystem.saveDataConfig(dataConfig);
                 bans.addBan(playerName, reason, date, senderName);
                 bansIP.addBan(player.getAddress().toString(), reason, date, senderName);
                 player.kickPlayer(ChatColor.RED + "You are permanently" + ChatColor.DARK_RED + " blacklisted " + ChatColor.RED + "from this server!\n\n" + ChatColor.GRAY + "Reason: " + ChatColor.WHITE + reason + ChatColor.GRAY + "\nFind out more: " + ChatColor.AQUA + ChatColor.UNDERLINE + config.getString("websiteBlacklisted") + ChatColor.GRAY + "\n\nBlacklist ID:" + ChatColor.WHITE + " GG-" + blacklistID + ChatColor.GRAY + "\nSharing your Blacklist ID may affect the processing of your appeal!");

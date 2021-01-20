@@ -73,7 +73,7 @@ public class CommandMute implements CommandExecutor {
             dataConfig.set(playerUUID + ".mutes.mutedOn", System.currentTimeMillis());
             dataConfig.set(playerUUID + ".mutes.mutedFor", date); /* TODO: Add durations */
             dataConfig.set(playerUUID + ".mutes.mutedSilently", isSilent);
-            banSystem.saveDataConfig();
+            banSystem.saveDataConfig(dataConfig);
             if (!isSilent) {
                 Bukkit.broadcastMessage(ChatColor.RED + senderName + ChatColor.GREEN + " has permanently muted " + ChatColor.RED + playerName);
             } else {

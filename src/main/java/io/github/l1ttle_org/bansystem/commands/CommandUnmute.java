@@ -68,7 +68,7 @@ public class CommandUnmute implements CommandExecutor {
             }
             dataConfig.set(playerUUID + ".mutes.unMutedReason", reason);
             dataConfig.set(playerUUID + ".mutes.unMutedSilently", isSilent);
-            banSystem.saveDataConfig();
+            banSystem.saveDataConfig(dataConfig);
             if (!isSilent) {
                 Bukkit.broadcastMessage(ChatColor.RED + senderName + ChatColor.GREEN + " has unmuted " + ChatColor.RED + playerName);
             } else {

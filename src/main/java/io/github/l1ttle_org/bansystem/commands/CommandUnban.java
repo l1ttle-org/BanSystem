@@ -63,7 +63,7 @@ public class CommandUnban implements CommandExecutor {
             }
             dataConfig.set(playerUUID + ".bans.unBannedOn", System.currentTimeMillis());
             dataConfig.set(playerUUID + ".bans.unBannedSilently", isSilent);
-            banSystem.saveDataConfig();
+            banSystem.saveDataConfig(dataConfig);
             bans.pardon(playerName);
             if (!isSilent) {
                 Bukkit.broadcastMessage(ChatColor.RED + senderName + ChatColor.GREEN + " has unbanned " + ChatColor.RED + playerName);

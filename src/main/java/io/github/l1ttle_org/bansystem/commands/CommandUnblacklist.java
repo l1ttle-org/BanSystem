@@ -64,7 +64,7 @@ public class CommandUnblacklist implements CommandExecutor {
             }
             dataConfig.set(playerUUID + ".blacklists.unBlacklistedOn", System.currentTimeMillis());
             dataConfig.set(playerUUID + ".blacklists.UnBlacklistedSilently", isSilent);
-            banSystem.saveDataConfig();
+            banSystem.saveDataConfig(dataConfig);
             bans.pardon(playerName);
             bansIP.pardon(playerUUID + ".blacklists.IP");
             if (!isSilent) {
