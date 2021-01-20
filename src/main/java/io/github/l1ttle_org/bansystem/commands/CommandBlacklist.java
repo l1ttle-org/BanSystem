@@ -61,10 +61,6 @@ public class CommandBlacklist implements CommandExecutor {
             }
             if (player != null) {
                 playerUUID = player.getUniqueId().toString();
-            } else {
-                playerUUID = Bukkit.getOfflinePlayer(playerName).getUniqueId().toString(); // There's no other easy way to get UUID of an OfflinePlayer
-            }
-            if (player != null) {
                 dataConfig.set(playerUUID + ".blacklists.blacklisted", true);
                 dataConfig.set(playerUUID + ".blacklists.blacklistedReason", reason);
                 if (sender instanceof Player) {
