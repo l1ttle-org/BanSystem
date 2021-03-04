@@ -1,6 +1,7 @@
 package io.github.l1ttle_org.bansystem.commands;
 
 import io.github.l1ttle_org.bansystem.BanSystem;
+import java.util.logging.Level;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -28,6 +29,7 @@ public class CommandUnblacklist implements CommandExecutor {
             final String reason;
             final String playerName;
             final String playerUUID;
+            final String playerIP;
             final boolean isSilent;
             if (!args[0].equalsIgnoreCase("-s")) {
                 playerName = args[0];
@@ -52,15 +54,17 @@ public class CommandUnblacklist implements CommandExecutor {
                 }
             }
             playerUUID = Bukkit.getOfflinePlayer(playerName).getUniqueId().toString(); // There's no other easy way to get UUID of an OfflinePlayer
+            playerIP = dataConfig.getString(playerUUID + ".blacklists.IP");
             try {
                 bans.pardon(playerName);
-                bansIP.pardon(playerUUID + ".blacklists.IP");
+                bansIP.pardon(playerIP);
+                banSystem.getLogger().log(Level.INFO, "Attempting to unblacklist IP " + playerIP);
             } catch (NullPointerException e) {
                 sender.sendMessage(ChatColor.RED + "No player matching " + ChatColor.YELLOW + playerName + ChatColor.RED + " was banned or blacklisted from this server");
                 return true;
             }
-            dataConfig.set(playerUUID + ".blacklists.blacklisted", false);
-            dataConfig.set(playerUUID + ".blacklists.unBlacklistedReason", reason);
+            dataConfig.set(playerIP + ".blacklists.blacklisted", false);
+            dataConfig.set(playerIP + ".blacklists.unBlacklistedReason", reason);
             if (sender instanceof Player) {
                 senderPlayer = (Player) sender;
                 dataConfig.set(playerUUID + ".blacklists.unBlacklistedBy", senderPlayer.getUniqueId().toString());
@@ -69,8 +73,8 @@ public class CommandUnblacklist implements CommandExecutor {
                 dataConfig.set(playerUUID + ".blacklists.unBlacklistedBy", "Console");
                 senderName = "Console";
             }
-            dataConfig.set(playerUUID + ".blacklists.unBlacklistedOn", System.currentTimeMillis());
-            dataConfig.set(playerUUID + ".blacklists.UnBlacklistedSilently", isSilent);
+            dataConfig.set(playerIP + ".blacklists.unBlacklistedOn", System.currentTimeMillis());
+            dataConfig.set(playerIP + ".blacklists.UnBlacklistedSilently", isSilent);
             banSystem.saveDataConfig(dataConfig);
             if (!isSilent) {
                 Bukkit.broadcastMessage(ChatColor.RED + senderName + ChatColor.GREEN + " has unblacklisted " + ChatColor.RED + playerName);

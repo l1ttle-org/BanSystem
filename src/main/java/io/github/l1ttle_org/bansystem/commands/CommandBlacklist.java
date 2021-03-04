@@ -1,6 +1,7 @@
 package io.github.l1ttle_org.bansystem.commands;
 
 import io.github.l1ttle_org.bansystem.BanSystem;
+import java.util.Date;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -9,8 +10,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-
-import java.util.Date;
 
 public class CommandBlacklist implements CommandExecutor {
     private final BanSystem banSystem;
@@ -32,6 +31,7 @@ public class CommandBlacklist implements CommandExecutor {
             final Player player;
             final String playerName;
             final String playerUUID;
+            final String playerIP;
             final Date date = null; /* TODO: Add durations */
             final boolean isSilent;
             final int blacklistID = dataConfig.getInt("lastBlacklistID") + 1;
@@ -61,25 +61,26 @@ public class CommandBlacklist implements CommandExecutor {
             }
             if (player != null) {
                 playerUUID = player.getUniqueId().toString();
-                dataConfig.set(playerUUID + ".blacklists.blacklisted", true);
-                dataConfig.set(playerUUID + ".blacklists.blacklistedReason", reason);
+                playerIP = player.getAddress().getHostString();
+                dataConfig.set(playerIP + ".blacklists.blacklisted", true);
+                dataConfig.set(playerIP + ".blacklists.blacklistedReason", reason);
                 if (sender instanceof Player) {
                     senderPlayer = (Player) sender;
-                    dataConfig.set(playerUUID + ".blacklists.blacklistedBy", senderPlayer.getUniqueId().toString());
+                    dataConfig.set(playerIP + ".blacklists.blacklistedBy", senderPlayer.getUniqueId().toString());
                     senderName = sender.getName();
                 } else {
                     dataConfig.set(playerUUID + ".blacklists.blacklistedBy", "Console");
                     senderName = "Console";
                 }
-                dataConfig.set(playerUUID + ".blacklists.blacklistedOn", System.currentTimeMillis());
-                dataConfig.set(playerUUID + ".blacklists.blacklistedFor", date); /* TODO: Add durations */
-                dataConfig.set(playerUUID + ".blacklists.blacklistedSilently", isSilent);
-                dataConfig.set(player.getAddress().getHostString() + ".blacklists.blacklistID", blacklistID);
-                dataConfig.set(playerUUID + ".blacklists.IP", player.getAddress().getHostString());
+                dataConfig.set(playerIP + ".blacklists.blacklistedOn", System.currentTimeMillis());
+                dataConfig.set(playerIP + ".blacklists.blacklistedFor", date); /* TODO: Add durations */
+                dataConfig.set(playerIP + ".blacklists.blacklistedSilently", isSilent);
+                dataConfig.set(playerIP + ".blacklists.blacklistID", blacklistID);
+                dataConfig.set(playerIP + ".blacklists.IP", player.getAddress().getHostString());
                 dataConfig.set("lastBlacklistID", blacklistID);
                 banSystem.saveDataConfig(dataConfig);
                 bans.addBan(playerName, reason, date, senderName);
-                bansIP.addBan(player.getAddress().getHostString(), reason, date, senderName);
+                bansIP.addBan(playerIP, reason, date, senderName);
                 player.kickPlayer(ChatColor.RED + "You are permanently" + ChatColor.DARK_RED + " blacklisted " + ChatColor.RED + "from this server!\n\n" + ChatColor.GRAY + "Reason: " + ChatColor.WHITE + reason + ChatColor.GRAY + "\nFind out more: " + ChatColor.AQUA + ChatColor.UNDERLINE + config.getString("websiteBlacklisted") + ChatColor.GRAY + "\n\nBlacklist ID:" + ChatColor.WHITE + " GG-" + blacklistID + ChatColor.GRAY + "\nSharing your Blacklist ID may affect the processing of your appeal!");
             } else {
                 sender.sendMessage(ChatColor.RED + "No player matching " + ChatColor.YELLOW + playerName + ChatColor.RED + " is connected to this server.");
