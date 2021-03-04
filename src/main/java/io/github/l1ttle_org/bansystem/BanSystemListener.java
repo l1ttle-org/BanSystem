@@ -11,8 +11,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 
-import java.util.logging.Level;
-
 public class BanSystemListener implements Listener {
     private final BanSystem banSystem;
 
@@ -34,7 +32,7 @@ public class BanSystemListener implements Listener {
         }
         if (dataConfig.getBoolean(playerUUID + ".blacklists.blacklisted") || bansIP.getBanEntry(event.getHostname()) != null) {
             final String reason = dataConfig.getString(playerUUID + ".blacklists.blacklistedReason");
-            int blacklistID = dataConfig.getInt(event.getHostname() + ".blacklists.blacklistID");
+            final int blacklistID = dataConfig.getInt(event.getHostname() + ".blacklists.blacklistID");
             player.kickPlayer(ChatColor.RED + "You are permanently" + ChatColor.DARK_RED + " blacklisted " + ChatColor.RED + "from this server!\n\n" + ChatColor.GRAY + "Reason: " + ChatColor.WHITE + reason + ChatColor.GRAY + "\nFind out more: " + ChatColor.AQUA + ChatColor.UNDERLINE + config.getString("websiteBlacklisted") + ChatColor.GRAY + "\n\nBlacklist ID:" + ChatColor.WHITE + " GG-" + blacklistID + ChatColor.GRAY + "\nSharing your Blacklist ID may affect the processing of your appeal!");
         }
     }
