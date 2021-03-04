@@ -76,7 +76,7 @@ public class CommandBlacklist implements CommandExecutor {
                 dataConfig.set(playerIP + ".blacklists.blacklistedFor", date); /* TODO: Add durations */
                 dataConfig.set(playerIP + ".blacklists.blacklistedSilently", isSilent);
                 dataConfig.set(playerIP + ".blacklists.blacklistID", blacklistID);
-                dataConfig.set(playerIP + ".blacklists.IP", player.getAddress().getHostString());
+                dataConfig.set(playerUUID + ".blacklists.IP", playerIP);
                 dataConfig.set("lastBlacklistID", blacklistID);
                 banSystem.saveDataConfig(dataConfig);
                 bans.addBan(playerName, reason, date, senderName);

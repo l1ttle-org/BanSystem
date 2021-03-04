@@ -58,9 +58,9 @@ public class CommandUnblacklist implements CommandExecutor {
             try {
                 bans.pardon(playerName);
                 bansIP.pardon(playerIP);
-                banSystem.getLogger().log(Level.INFO, "Attempting to unblacklist IP " + playerIP);
             } catch (NullPointerException | IllegalArgumentException e) {
                 sender.sendMessage(ChatColor.RED + "No player matching " + ChatColor.YELLOW + playerName + ChatColor.RED + " was banned or blacklisted from this server");
+                banSystem.getLogger().log(Level.INFO, "Attempting to unblacklist IP " + playerIP);
                 return true;
             }
             dataConfig.set(playerIP + ".blacklists.blacklisted", false);
