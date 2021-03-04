@@ -1,6 +1,5 @@
 package io.github.l1ttle_org.bansystem;
 
-import java.util.logging.Level;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -23,18 +22,16 @@ public class BanSystemListener implements Listener {
         final FileConfiguration config = banSystem.getConfig();
         final FileConfiguration dataConfig = banSystem.getDataConfig();
         final String playerUUID = player.getUniqueId().toString();
-        final String playerIP = event.getHostname();
-        if (player.isBanned()) {
-            final String reason = dataConfig.getString(playerUUID + ".bans.bannedReason");
-            final int banID = dataConfig.getInt(playerUUID + ".bans.banID");
-            event.setKickMessage(ChatColor.RED + "You are permanently" + ChatColor.DARK_RED + " banned " + ChatColor.RED + "from this server!\n\n" + ChatColor.GRAY + "Reason: " + ChatColor.WHITE + reason + ChatColor.GRAY + "\nFind out more: " + ChatColor.AQUA + ChatColor.UNDERLINE + config.getString("website") + ChatColor.GRAY + "\n\nBan ID:" + ChatColor.WHITE + " GG-" + banID + ChatColor.GRAY + "\nSharing your Ban ID may affect the processing of your appeal!");
-        }
-        banSystem.getLogger().log(Level.INFO, "event.getHostname() returned " + playerIP);
-        banSystem.getLogger().log(Level.INFO, "player.getAddress().getHostString() returned " + player.getAddress().getHostString());
+        final String playerIP = event.getHostname().replace(":25565", "");
         if (dataConfig.getBoolean(playerIP + ".blacklists.blacklisted")) {
             final String reason = dataConfig.getString(playerIP + ".blacklists.blacklistedReason");
             final int blacklistID = dataConfig.getInt(playerIP + ".blacklists.blacklistID");
             event.setKickMessage(ChatColor.RED + "You are permanently" + ChatColor.DARK_RED + " blacklisted " + ChatColor.RED + "from this server!\n\n" + ChatColor.GRAY + "Reason: " + ChatColor.WHITE + reason + ChatColor.GRAY + "\nFind out more: " + ChatColor.AQUA + ChatColor.UNDERLINE + config.getString("websiteBlacklisted") + ChatColor.GRAY + "\n\nBlacklist ID:" + ChatColor.WHITE + " GG-" + blacklistID + ChatColor.GRAY + "\nSharing your Blacklist ID may affect the processing of your appeal!");
+        }
+        if (player.isBanned()) {
+            final String reason = dataConfig.getString(playerUUID + ".bans.bannedReason");
+            final int banID = dataConfig.getInt(playerUUID + ".bans.banID");
+            event.setKickMessage(ChatColor.RED + "You are permanently" + ChatColor.DARK_RED + " banned " + ChatColor.RED + "from this server!\n\n" + ChatColor.GRAY + "Reason: " + ChatColor.WHITE + reason + ChatColor.GRAY + "\nFind out more: " + ChatColor.AQUA + ChatColor.UNDERLINE + config.getString("website") + ChatColor.GRAY + "\n\nBan ID:" + ChatColor.WHITE + " GG-" + banID + ChatColor.GRAY + "\nSharing your Ban ID may affect the processing of your appeal!");
         }
     }
 
