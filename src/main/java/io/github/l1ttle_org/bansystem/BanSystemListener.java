@@ -23,7 +23,8 @@ public class BanSystemListener implements Listener {
         final FileConfiguration config = banSystem.getConfig();
         final FileConfiguration dataConfig = banSystem.getDataConfig();
         final String playerUUID = player.getUniqueId().toString();
-        final String playerIP = event.getHostname().replace(":25565", "");
+        String playerIP = event.getHostname().replace(":25565", "");
+        String playerIP = playerIP.replace("localhost", "127.0.0.1");
         banSystem.getLogger().log(Level.INFO, "Checking IP" + playerIP);
         if (dataConfig.getBoolean(playerIP + ".blacklists.blacklisted")) {
             final String reason = dataConfig.getString(playerIP + ".blacklists.blacklistedReason");
@@ -37,7 +38,7 @@ public class BanSystemListener implements Listener {
         }
     }
 
-    @EventHandler (priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onChat(AsyncPlayerChatEvent event) {
         final FileConfiguration dataConfig = banSystem.getDataConfig();
         final Player player = event.getPlayer();
