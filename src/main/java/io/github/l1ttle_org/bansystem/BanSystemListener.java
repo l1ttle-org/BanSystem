@@ -23,6 +23,7 @@ public class BanSystemListener implements Listener {
         final FileConfiguration dataConfig = banSystem.getDataConfig();
         final String playerUUID = player.getUniqueId().toString();
         final String playerIP = event.getHostname().replace(":25565", "");
+        banSystem.getLogger().log(Level.INFO, "Checking IP" + playerIP);
         if (dataConfig.getBoolean(playerIP + ".blacklists.blacklisted")) {
             final String reason = dataConfig.getString(playerIP + ".blacklists.blacklistedReason");
             final int blacklistID = dataConfig.getInt(playerIP + ".blacklists.blacklistID");
