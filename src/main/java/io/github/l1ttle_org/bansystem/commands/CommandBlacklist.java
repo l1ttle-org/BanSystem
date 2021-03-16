@@ -64,7 +64,7 @@ public class CommandBlacklist implements CommandExecutor {
                 playerUUID = player.getUniqueId().toString();
                 banSystem.getLogger().log(Level.INFO, "Blacklisting UUID " + playerUUID);
                 playerIP = player.getAddress().getHostString();
-                banSystem.getLogger().log(Level.INFO, "Blacklisting IP " + playerIP);				
+                banSystem.getLogger().log(Level.INFO, "Blacklisting IP " + playerIP);			
                 dataConfig.set(playerIP + ".blacklists.blacklisted", true);
                 dataConfig.set(playerIP + ".blacklists.blacklistedReason", reason);
                 if (sender instanceof Player) {
