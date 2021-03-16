@@ -1,5 +1,6 @@
 package io.github.l1ttle_org.bansystem;
 
+import java.util.logging.Level;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -22,9 +23,9 @@ public class BanSystemListener implements Listener {
         final FileConfiguration config = banSystem.getConfig();
         final FileConfiguration dataConfig = banSystem.getDataConfig();
         final String playerUUID = player.getUniqueId().toString();
-        banSystem.getLogger().log("Checking UUID " + playerUUID);
+        banSystem.getLogger().log(Level.INFO, "Checking UUID " + playerUUID);
         final String playerIP = event.getAddress().toString().replace("/", "");
-        banSystem.getLogger().log("Checking IP " + playerIP);
+        banSystem.getLogger().log(Level.INFO, "Checking IP " + playerIP);
         if (dataConfig.getBoolean(playerIP + ".blacklists.blacklisted")) {
             final String reason = dataConfig.getString(playerIP + ".blacklists.blacklistedReason");
             final int blacklistID = dataConfig.getInt(playerIP + ".blacklists.blacklistID");

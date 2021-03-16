@@ -1,5 +1,6 @@
 package io.github.l1ttle_org.bansystem.commands;
 
+import java.util.logging.Level;
 import io.github.l1ttle_org.bansystem.BanSystem;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;
@@ -63,7 +64,7 @@ public class CommandBan implements CommandExecutor {
             } else {
                 playerUUID = Bukkit.getOfflinePlayer(playerName).getUniqueId().toString(); // There's no other easy way to get UUID of an OfflinePlayer
             }
-            banSystem.getLogger().log("Banning UUID " + playerUUID);
+            banSystem.getLogger().log(Level.INFO, "Banning UUID " + playerUUID);
             dataConfig.set(playerUUID + ".bans.banned", true);
             dataConfig.set(playerUUID + ".bans.bannedReason", reason);
             if (sender instanceof Player) {
