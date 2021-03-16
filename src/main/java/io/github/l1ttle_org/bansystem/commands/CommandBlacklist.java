@@ -2,7 +2,6 @@ package io.github.l1ttle_org.bansystem.commands;
 
 import io.github.l1ttle_org.bansystem.BanSystem;
 import java.util.Date;
-import java.util.logging.Level;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -78,7 +77,6 @@ public class CommandBlacklist implements CommandExecutor {
                 dataConfig.set(playerIP + ".blacklists.blacklistedSilently", isSilent);
                 dataConfig.set(playerIP + ".blacklists.blacklistID", blacklistID);
                 dataConfig.set(playerUUID + ".blacklists.IP", playerIP);
-                banSystem.getLogger().log(Level.INFO, "Blacklisting IP" + playerIP);
                 dataConfig.set("lastBlacklistID", blacklistID);
                 banSystem.saveDataConfig(dataConfig);
                 bans.addBan(playerName, reason, date, senderName);
