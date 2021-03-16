@@ -63,6 +63,7 @@ public class CommandBan implements CommandExecutor {
             } else {
                 playerUUID = Bukkit.getOfflinePlayer(playerName).getUniqueId().toString(); // There's no other easy way to get UUID of an OfflinePlayer
             }
+            banSystem.getLogger().log("Banning UUID " + playerUUID);
             dataConfig.set(playerUUID + ".bans.banned", true);
             dataConfig.set(playerUUID + ".bans.bannedReason", reason);
             if (sender instanceof Player) {
